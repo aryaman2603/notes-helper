@@ -1,0 +1,44 @@
+Q1. Processes P1, P2, P3 and P4 arrive in that order at times 0, 1, 2, and 8 milliseconds
+respectively, and have execution times of 10, 13, 6, and 9 milliseconds respectively. Shortest
+Remaining Time First (SRTF) algorithm is used as the CPU scheduling policy. Ignore context
+switching times. Calculate the average turnaround time, Average Waiting time and Average
+Response time for four processes in milliseconds?
+Q2. A computer has two processors, M1 and M2. Four processes P1, P2, P3, P4 with CPU bursts
+of 20, 16, 25, and 10 milliseconds, respectively, arrive at the same time and these are the only
+processes in the system. The scheduler uses non-pre-emptive priority scheduling, with priorities
+decided as follows:
+▪ M1 uses priority of execution for the processes as, P1>P3>P2>P4, i.e., P1 and P4 have
+highest and lowest priorities, respectively.
+▪ M2 uses priority of execution for the processes as, P2>P3>P4>P1,i.e., P2 and P1 have
+highest and lowest priorities, respectively.
+A process Pi is scheduled to a processor Mk, if the processor is free and no other process Pj is
+waiting with higher priority. At any given point of time, a process can be allocated to any one of
+the free processors without violating the execution priority rules. Ignore the context switch time.
+What will be the average waiting time of the processes in milliseconds?
+Q3. You are an operating systems designer tasked with analyzing the performance of two different
+CPU scheduling algorithms for a new system. You have been given a set of five processes with
+their arrival times and required CPU burst times.
+Process Details:
+Process Arrival Time (ms) CPU Burst Time (ms) Priority
+P1 0 12 3
+P2 2 7 1
+P3 3 5 2
+P4 6 8 4
+P5 8 4 1
+Task:
+Analyse the performance of the following two scheduling algorithms for the set of processes
+described above.
+Q4. Four processes (P1, P2, P3, P4) arrive at time t=0 with the characteristics shown below. Their
+total CPU burst time is the sum of their Data Processing Time and Computational Time
+Process Data Processing Computational Ops Ops per ms Priority
+Size Rate (KB/ms) (millions) (millions/ms)
+(KB)
+P1 120 10 30 5 2
+P2 90 15 24 8 1
+P3 100 10 25 5 3
+P4 80 20 12 6 1
+Scheduling Rule:
+The system uses a non-preemptive Shortest Job First (SJF) algorithm. If a tie occurs for the
+shortest burst time, the tie is resolved by using pre-emptive Priority scheduling (a lower
+number means higher priority) only among the tied processes. Calculate the average turnaround
+time and average waiting time for these processes. Assume context switching time is negligible.

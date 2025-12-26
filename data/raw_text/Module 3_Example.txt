@@ -1,0 +1,165 @@
+Operating System
+Module – 3
+Dr. Naveenkumar Jayakumar
+PRP – 217 4
+CPU Scheduling – Sample Problem
+▪ Consider three processes, P1, P2, and P3, that arrive at time t = 0 with the
+Process CPU Burst 1(ms) I/O Burst(ms) CPU Burst 2(ms)
+following characteristics:
+P1 10 20 5
+P2 7 15 3
+P3 12 25 8
+▪ Assume a Round Robin scheduler with a time quantum of 5 ms. Each
+context switch takes 1 ms. Processes begin with a CPU burst, followed by
+an I/O burst, and finally another CPU burst. Calculate average waiting
+time, average turnaround time, Response time, CPU utilization time and
+No. of Context switch.
+CPU Scheduling – Sample Problem
+At time 0: P1 runs for its first 5ms quantum.
+P1
+0 5
+CPU Scheduling – Sample Problem
+At time 5: Context switch.
+P1 CS
+0 5 6
+CPU Scheduling – Sample Problem
+At time 6: P2 runs for its 5ms quantum..
+P1 CS P2
+0 5 6 11
+CPU Scheduling – Sample Problem
+At time 11: Context switch.
+P1 CS P2 CS
+0 5 6 11 12
+CPU Scheduling – Sample Problem
+At time 12: P3 runs for its 5ms quantum.
+P1 CS P2 CS P3
+0 5 6 11 12 17
+CPU Scheduling – Sample Problem
+At time 17: Context Switch
+P1 CS P2 CS P3 CS
+0 5 6 11 12 17 18
+CPU Scheduling – Sample Problem
+At time 18: P1 runs for its remaining 5ms of CPU Burst 1, then begins its 20ms I/O burst, which will complete at t = 43ms
+P1 CS P2 CS P3 CS P1
+0 5 6 11 12 17 18 23
+CPU Scheduling – Sample Problem
+At time 18: P1 runs for its remaining 5ms of CPU Burst 1, then begins its 20ms I/O burst, which will complete at t = 43ms
+P1 CS P2 CS P3 CS P1
+0 5 6 11 12 17 18 23
+P1 I/O Burst
+CPU Scheduling – Sample Problem
+At time 23: Context switch.
+P1 CS P2 CS P3 CS P1 CS
+0 5 6 11 12 17 18 23 24
+P1 I/O Burst
+CPU Scheduling – Sample Problem
+At time 24: P2 runs for its remaining 2ms of CPU Burst 1, then begins its 15ms I/O burst, which will complete at t = 41ms.
+P1 CS P2 CS P3 CS P1 CS P2
+0 5 6 11 12 17 18 23 24 26
+P1 I/O Burst
+CPU Scheduling – Sample Problem
+At time 24: P2 runs for its remaining 2ms of CPU Burst 1, then begins its 15ms I/O burst, which will complete at t = 41ms.
+P1 CS P2 CS P3 CS P1 CS P2
+0 5 6 11 12 17 18 23 24 26
+P1 I/O Burst
+P2 I/O Burst
+CPU Scheduling – Sample Problem
+At time 26: Context Switch
+P1 CS P2 CS P3 CS P1 CS P2 CS
+0 5 6 11 12 17 18 23 24 26 27
+P1 I/O Burst
+P2 I/O Burst
+CPU Scheduling – Sample Problem
+At time 27: P3 runs for another 5ms quantum.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3
+0 5 6 11 12 17 18 23 24 26 27 32
+P1 I/O Burst
+P2 I/O Burst
+CPU Scheduling – Sample Problem
+At time 32: P3 runs for another 2ms quantum. It then begins its 25ms I/O burst, which will complete at t = 59ms.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3
+0 5 6 11 12 17 18 23 24 26 27 32 34
+P1 I/O Burst
+P2 I/O Burst
+CPU Scheduling – Sample Problem
+At time 32: P3 runs for another 2ms quantum. It then begins its 25ms I/O burst, which will complete at t = 59ms.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3
+0 5 6 11 12 17 18 23 24 26 27 32 34
+P1 I/O Burst
+P2 I/O Burst
+P3 I/O Burst
+CPU Scheduling – Sample Problem
+At time 34: CPU is IDLE
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3
+IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41
+P1 I/O Burst
+P2 I/O Burst
+P3 I/O Burst
+CPU Scheduling – Sample Problem
+At time 41: P2's I/O completes. It runs for its 3ms CPU Burst 2. P2 finishes at t = 44ms.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3 P2
+IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41 44
+P1 I/O Burst
+P2 I/O Burst
+P3 I/O Burst
+CPU Scheduling – Sample Problem
+At time 44: Context Switch
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3 P2 CS
+IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41 44 45
+P1 I/O Burst
+P2 I/O Burst
+P3 I/O Burst
+CPU Scheduling – Sample Problem
+At time 45: P1's I/O completes (at t=43). It runs for its 5ms CPU Burst 2. P1 finishes at t = 50ms.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3 P2 CS P1
+IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41 44 45 50
+P1 I/O Burst
+P2 I/O Burst
+P3 I/O Burst
+CPU Scheduling – Sample Problem
+At time 50: The CPU is idle.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3 P2 CS P1
+IDLE IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41 44 45 50 59
+P1 I/O Burst
+P2 I/O Burst
+P3 I/O Burst
+CPU Scheduling – Sample Problem
+At time 59: P3's I/O completes. It runs for a 5ms quantum of its CPU Burst 2.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3 P2 CS P1 P3
+IDLE IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41 44 45 50 59 64
+P1 I/O Burst
+P3 I/O Burst
+P2 I/O Burst
+CPU Scheduling – Sample Problem
+At time 64: P3 runs for its final 3ms of CPU Burst 2. P3 finishes at t = 67ms.
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3 P2 CS P1 P3 P3
+IDLE IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41 44 45 50 59 64 67
+P1 I/O Burst
+P3 I/O Burst
+P2 I/O Burst
+CPU Scheduling – Sample Problem
+P1 CS P2 CS P3 CS P1 CS P2 CS P3 P3 P2 CS P1 P3 P3
+IDLE IDLE
+0 5 6 11 12 17 18 23 24 26 27 32 34 41 44 45 50 59 64 67
+P3 I/O Burst
+P1 I/O Burst
+P2 I/O Burst
+Turnaround Response CPU
+Process Arrival Rate Burst Time Completion Time Waiting Time
+Time Time Utilization
+P1 0 15 50 50 – 0 = 50 50 – 15 = 35 0 – 0 = 0 15 / 51 = 29.41
+P2 0 10 44 44 – 0 = 44 44 – 10 = 34 6 – 0 = 6 10 / 51 = 19.60
+P3 0 20 67 67 – 0 = 67 67 – 20 = 47 12 – 0 = 12 20 / 51 = 39.21
+Total CPU Burst Time = 15 + 10 + 20 + 6 = 51
+Total Elapsed Time = 67
+Total CPU utilization = (51 / 67) * 100 = 76.11
+Idle CPU time = 67 – 51 = 16
+Total Idle time = (16/67) * 100 = 23.88
+No. of Context Switch = 06
