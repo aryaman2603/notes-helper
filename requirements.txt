@@ -1,0 +1,6 @@
+ollama
+faiss-cpu
+pdfplumber
+tqdm
+numpy
+mcp

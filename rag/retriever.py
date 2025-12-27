@@ -1,29 +1,36 @@
 import faiss
 import json
-import ollama
 import numpy as np
 from pathlib import Path
+import ollama
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+_index = None
+_metadata = None
 
-index = faiss.read_index(str(BASE_DIR / "data/faiss.index"))
-metadata = json.load(open(BASE_DIR / "data/metadata.json"))
+DATA_DIR = Path("data")
 
-def retrieve(query, k=5):
-    q_emb = ollama.embeddings(
-        model="nomic-embed-text", 
+def _load_index():
+    global _index, _metadata
+    if _index is None:
+        _index = faiss.read_index(str(DATA_DIR / "faiss.index"))
+        with open(DATA_DIR / "metadata.json") as f:
+            _metadata = json.load(f)
+
+def retrieve(query: str, k: int = 4) -> str:
+    _load_index()
+
+    emb = ollama.embeddings(
+        model="nomic-embed-text",
         prompt=query
     )["embedding"]
 
-    q_vec = np.array([q_emb], dtype='float32')
-    distances, indices = index.search(q_vec, k)
+    D, I = _index.search(
+        np.array([emb], dtype="float32"),
+        k
+    )
 
-    return [metadata[i] for i in indices[0]]
+    chunks = []
+    for idx in I[0]:
+        chunks.append(_metadata[idx]["text"])
 
-if __name__ == "__main__":
-    query = "Explain deadlock prevention and avoidance"
-    results = retrieve(query)
-
-    for res in results:
-        print("\nSource:", res["source"])
-        print("Text:", res["text"][:400])
+    return "\n\n".join(chunks)

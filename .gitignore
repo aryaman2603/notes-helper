@@ -1,1 +1,23 @@
 venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Data artifacts (RAG outputs)
+data/faiss.index
+data/metadata.json
+data/raw_text/
+
+# User notes (PDFs)
+notes/
+data/
+
+# Environment variables
+.env
+
+# OS / Editor files
+.DS_Store
+.vscode/
+.idea/
+uv.lock

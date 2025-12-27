@@ -1,0 +1,16 @@
+[project]
+name = "noteshelper"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "anyio>=4.12.0",
+    "faiss-cpu>=1.13.2",
+    "fastapi>=0.127.1",
+    "mcp>=1.25.0",
+    "numpy>=2.4.0",
+    "ollama>=0.6.1",
+    "tqdm>=4.67.1",
+    "uvicorn>=0.40.0",
+]
