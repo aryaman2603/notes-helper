@@ -7,12 +7,15 @@ st.set_page_config(page_title="Notes Helper", layout="wide")
 
 st.title("📚 Notes Helper")
 st.write("Ask questions from your notes and get cited answers.")
-
+subject = st.selectbox(
+    "Select Subject",
+    options=["os", "cn", "cloud"]
+)
 query = st.text_input("Enter your question:")
 
 if st.button("Ask") and query:
     with st.spinner("Thinking..."):
-        resp = requests.post(API_URL, json={"query": query})
+        resp = requests.post(API_URL, json={"query": query, "subject": subject})
         data = resp.json()
 
     st.subheader("Answer")

@@ -7,6 +7,7 @@ app = FastAPI(title="Notes Helper API")
 
 class QueryRequest(BaseModel):
     query: str
+    subject: str
 
 class Source(BaseModel):
     source: str
@@ -19,7 +20,7 @@ class AnswerResponse(BaseModel):
 
 @app.post("/ask_llm", response_model=AnswerResponse)
 def ask_with_llm(req: QueryRequest):
-    context, sources = retrieve(req.query)
+    context, sources = retrieve(req.query, subject=req.subject)
     answer = generate_answer(req.query, context)
 
     return AnswerResponse(
