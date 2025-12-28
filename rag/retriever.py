@@ -30,7 +30,17 @@ def retrieve(query: str, k: int = 4) -> str:
     )
 
     chunks = []
+    sources = []
     for idx in I[0]:
+        meta = _metadata[idx]
         chunks.append(_metadata[idx]["text"])
+        sources.append({
+            "source": meta.get("source", "unknown"),
+            "page": meta.get("page", None),
+            "chunk_id": idx
+        })
 
-    return "\n\n".join(chunks)
+    context = "\n\n".join(chunks)
+    context = context[:40000]
+
+    return context, sources

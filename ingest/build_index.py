@@ -2,12 +2,17 @@ import faiss
 import json
 from pathlib import Path
 import ollama
+import pdfplumber
 from chunker import chunk_text
 from tqdm import tqdm
 import numpy as np
-RAW_DIR = Path("../data/raw_text")
-INDEX_PATH = Path("../data/faiss.index")
-META_PATH = Path("../data/metadata.json")
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+RAW_DIR   = BASE_DIR / "notes"
+INDEX_PATH = BASE_DIR / "data" / "faiss.index"
+META_PATH  = BASE_DIR / "data" / "metadata.json"
+
 
 DIM = 768
 index = faiss.IndexFlatL2(DIM)
@@ -15,28 +20,39 @@ index = faiss.IndexFlatL2(DIM)
 metadata = []
 chunk_id = 0
 
-for txt_file in RAW_DIR.glob("*.txt"):
-    text = txt_file.read_text(encoding="utf-8")
-    chunks = chunk_text(text)
+for pdf_file in RAW_DIR.glob("*.pdf"):
+    with pdfplumber.open(pdf_file) as pdf:
+        for page_num, page in enumerate(pdf.pages):
+            text = page.extract_text()
+            if not text:
+                continue
 
-    for chunk in tqdm(chunks, desc=f"Processing {txt_file.name}"):
-        emb = ollama.embeddings(
-            model = "nomic-embed-text", 
-            prompt = chunk
-        )["embedding"]
+            chunks = chunk_text(text)
 
-        index.add(np.array([emb], dtype='float32'))
+            for chunk in tqdm(
+                chunks,
+                desc=f"{pdf_file.name} (page {page_num + 1})"
+            ):
+                emb = ollama.embeddings(
+                    model="nomic-embed-text",
+                    prompt=chunk
+                )["embedding"]
 
-        metadata.append({
-            "id": chunk_id,
-            "source": txt_file.name,
-            "text": chunk
-        })
-        chunk_id += 1
-# Save the FAISS index
+                index.add(np.array([emb], dtype="float32"))
+
+                metadata.append({
+                    "id": chunk_id,
+                    "source": pdf_file.name,
+                    "page": page_num + 1,     
+                    "text": chunk
+                })
+
+                chunk_id += 1
+
 INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
 faiss.write_index(index, str(INDEX_PATH))
-json.dump(metadata, open(META_PATH, "w"), indent=2)
+
+with open(META_PATH, "w") as f:
+    json.dump(metadata, f, indent=2)
 
 print("Index built successfully")
-
