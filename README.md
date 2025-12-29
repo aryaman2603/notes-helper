@@ -44,24 +44,67 @@ The project follows a microservices-inspired directory structure to separate con
 ```text
 noteshelper/
 ├── agent/                  # API & Inference Layer
-│   ├── main.py             # FastAPI entry point (Orchestrator)
+│   ├── api.py             # FastAPI entry point (Orchestrator)
 │   ├── memory.py           # Session-based sliding window memory
 │   └── llm.py              # Ollama interaction logic
 ├── ingest/                 # Data Pipeline Layer
-│   ├── ingest.py           # Main ETL script (Run this to index notes)
-│   ├── chunking.py         # Logic to split PDFs into 500-token chunks
-│   └── indexer.py          # FAISS index management (Add/Save/Load)
+│   ├── extract_text.py           # Main ETL script (Run this to index notes)
+│   ├── chunker.py         # Logic to split PDFs into 500-token chunks
+│   └── build_index.py          # FAISS index management (Add/Save/Load)
 ├── rag/                    # Retrieval Layer
-│   ├── retriever.py        # Cosine similarity search logic
-│   └── config.py           # Settings (e.g., Top-K=5, Chunk Size)
+│   ├── retriever.py        # L2 similarity search logic
+│   
 ├── ui/                     # Frontend Layer
 │   └── app.py              # Streamlit Chat Interface
 ├── notes/                  # Raw Data (PDFs)
 │   ├── os/                 # Folder for Operating Systems notes
 │   └── cn/                 # Folder for Computer Networks notes
-├── data/                   # Artifact Storage
+├── data/                   # Artifact Storage, created separately for each subject
 │   ├── faiss.index         # The actual vector database file
 │   └── metadata.json       # Maps Vector IDs -> Text Content & Filenames
 ├── requirements.txt        # Python dependencies
 └── README.md               # Documentation
 ```
+
+## Setup and Usage
+
+### Prerequisites
+* **Software:** Python 3.10+, [Ollama](https://ollama.com/) installed.
+
+### Step 1: Clone and Install
+
+```bash
+git clone [https://github.com/yourusername/noteshelper.git](https://github.com/yourusername/noteshelper.git)
+cd noteshelper
+```
+
+# Create virtual environment
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+# Install dependencies
+```bash
+pip install -r requirements.txt
+```
+### Step 2: Initialize Local Models
+```bash
+ollama pull llama3           
+ollama pull nomic-embed-text 
+```
+
+### Step 3: Ingest Data
+
+# Create subject folders inside notes and drop you pdf lecture slides into these folders. 
+# Run the ingestion script
+```bash
+python -m ingest.extract_text
+```
+
+### Step 4: Run the application
+``` bash
+uvicorn agent.api:app --reload --port 8000
+streamlit run ui/app.py
+```
+
