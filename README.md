@@ -34,7 +34,7 @@ graph TD
         L -->|Response| F
         F -->|Display| U
     end
-    
+``` 
     
 
 ## Project Structure
@@ -64,3 +64,4 @@ noteshelper/
 │   └── metadata.json       # Maps Vector IDs -> Text Content & Filenames
 ├── requirements.txt        # Python dependencies
 └── README.md               # Documentation
+```
