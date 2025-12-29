@@ -6,6 +6,8 @@ import pdfplumber
 from pathlib import Path
 from tqdm import tqdm
 from chunker import chunk_text
+import pytesseract
+from pdf2image import convert_from_path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,6 +15,20 @@ NOTES_DIR = BASE_DIR / "notes"
 DATA_DIR = BASE_DIR / "data"
 
 DIM = 768
+
+def smart_extract(pdf_path, page_index, plum_page):
+    text = plum_page.extract_text() or ""
+    clean_text = text.strip()
+
+    if len(clean_text)<20:
+        try:
+            images = convert_from_path(str(pdf_path),first_page=page_index+1, last_page=page_index+1, dpi=300)
+            if images:
+                ocr_text = pytesseract.image_to_string(images[0])
+                return f"[OCR_EXTRACT]{ocr_text}"
+        except Exception as e:
+            pass
+    return text
 
 
 def build_subject_index(subject: str, pdf_dir: Path):
@@ -26,7 +42,7 @@ def build_subject_index(subject: str, pdf_dir: Path):
 
     
     if index_path.exists() and meta_path.exists():
-        print("🔁 Loading existing index")
+        print(" Loading existing index")
         index = faiss.read_index(str(index_path))
         metadata = json.load(open(meta_path))
 
